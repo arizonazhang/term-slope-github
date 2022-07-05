@@ -21,8 +21,15 @@ are shown below:
 
 
 **Computation**
-- put-call parity: $P- C = K e^{-r_t T}$
-
+- put-call parity: $P- C = K e^{-r_t T}$ -S_t + PV(Dividend)$
+- theorectical put-call ratio: $\frac{P-C}{C}=\frac{P}{C} - 1$ where $P-C$ is approximately $PV(Dividend)$ for ATM options
+- actual put-call ratio: $\frac{V^{BS}_{PUT}({S_t/K=1, T, \sigma_t^{ATM put})}{V^{BS}_{CALL}({S_t/K=1, T, \sigma_t^{ATM call})} - 1$ for T ranging from 1/12 to 1
+- slope $spc$: slope of regressing put-call ratio over $T$
+- since Refinitiv do not provide comprehensive implied volatility data, we need to back-solve for the values based on
+option prices.
+  
+- Back-solving for implied vol used the Newton's method: $\sigma_{n+1} = \sigma_{n} - \frac{BS(\sigma_n)-P}{v(\sigma_n)} where 
+$P$ is the option price and $v(\sigma_n)$ is vega. reference: [reference](https://quant.stackexchange.com/questions/7761/a-simple-formula-for-calculating-implied-volatility)
 
 
 # Calculation
