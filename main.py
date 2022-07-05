@@ -51,7 +51,7 @@ if __name__ == "__main__":
     scheduler = BlockingScheduler()
     try:
         print("Scheduler starts...")
-        scheduler.add_job(weekly_update, "cron", day_of_week='fri', hour=1, minute=1, timezone="Asia/Shanghai")
+        scheduler.add_job(weekly_update, "cron", day_of_week='sat', hour=1, minute=1, timezone="Asia/Shanghai")
         scheduler.start()
     except (KeyboardInterrupt, SystemExit):
         pass

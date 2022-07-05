@@ -25,7 +25,7 @@ are shown below:
 - theorectical put-call ratio: $\frac{P-C}{C}=\frac{P}{C} - 1$ where $P-C$ is approximately $PV(Dividend)$ for ATM options
 - actual put-call ratio: 
   
-  $\frac{V_{PUT}^{BS}\left(S_t/K=1, T, \sigma_t^{ATM put}\right)}{V^{BS}_{call}\left(S_t/K=1, T, \sigma_t^{ATM call}\right)} - 1$ 
+  $\frac{V_{Put}^{BS}\left(S_t/K=1, T, \sigma_t^{ATM put}\right)}{V^{BS}_{call}\left(S_t/K=1, T, \sigma_t^{ATM call}\right)} - 1$ 
   
   for $T$ ranging from 1/12 to 1 
 
