@@ -20,16 +20,17 @@ are shown below:
 - Volatility: 16.11% versus 23.41% (long HSI)
 
 
-**Computation**
+**SPC Formula**
 - put-call parity: $P- C = K e^{-r_t T}$ -S_t + PV(Dividend)$
 - theorectical put-call ratio: $\frac{P-C}{C}=\frac{P}{C} - 1$ where $P-C$ is approximately $PV(Dividend)$ for ATM options
-- actual put-call ratio: $\frac{V^{BS}_{PUT}({S_t/K=1, T, \sigma_t^{ATM put})}{V^{BS}_{CALL}({S_t/K=1, T, \sigma_t^{ATM call})} - 1$ for T ranging from 1/12 to 1
+- actual put-call ratio: 
+  $\frac{V^{BS}_{PUT}(S_t/K=1, T, \sigma_t^{ATM put})}{V^{BS}_{CALL}(S_t/K=1, T, \sigma_t^{ATM call})} - 1$ for T ranging from 1/12 to 1
 - slope $spc$: slope of regressing put-call ratio over $T$
-- since Refinitiv do not provide comprehensive implied volatility data, we need to back-solve for the values based on
-option prices.
   
-- Back-solving for implied vol used the Newton's method: $\sigma_{n+1} = \sigma_{n} - \frac{BS(\sigma_n)-P}{v(\sigma_n)} where 
-$P$ is the option price and $v(\sigma_n)$ is vega. reference: [reference](https://quant.stackexchange.com/questions/7761/a-simple-formula-for-calculating-implied-volatility)
+- Back-solving for implied vol used the Newton's method: $\sigma_{n+1} = \sigma_{n} - \frac{BS(\sigma_n)-P}{v(\sigma_n)}$ where 
+$P$ is the option price and $v(\sigma_n)$ is vega. 
+
+> online reference: [Computing implied volatility](https://quant.stackexchange.com/questions/7761/a-simple-formula-for-calculating-implied-volatility) and SPC paper (see the folder)
 
 
 # Calculation
@@ -39,7 +40,7 @@ $P$ is the option price and $v(\sigma_n)$ is vega. reference: [reference](https:
 - ATM option close price (maturity ranging from 1M to 12M)
 
 ## Procedures
-- Get HSI close price ($S_t$) and mid-price (average of OHLC, "M_t") to determine the ticker of ATM 
+- Get HSI close price ($S_t$) and mid-price (average of OHLC) to determine the ticker of ATM 
 options
 - Construct yield curve using HIBOR quotes (cubic interpolation)
 - Access option settlement prices from Refinitiv API
@@ -55,18 +56,38 @@ $$q = \frac{1}{2}(q_1 + q_2)$$
 - Compute spc of each day
 
 # Dataset specifications
-## HSIVolCurve table
-- date: option trading day
-- type: option type ("c" or "p")
-- 1M to 12M: implied volatility on that day for a option expiring in xM later
+## MySQL `HSIVolCurve` table
 
-table specification:
+| Column Name      | Description |
+| ----------- | ----------- | 
+| date | pricing date of the options |
+| type | option type ("c" or "p") |
+| 1M, 2M, ...,  12M | implied volatility on that day for a option expiring in xM later|
+
+
+**Specification:**
 - data type: "type" is of type `char(1)`
   
-``ALTER TABLE HSIVolCurve MODIFY type char(1);  ``
+> ALTER TABLE HSIVolCurve MODIFY type char(1);  
 - unique keys: unique pair of "date" and "type"
 
-``ALTER TABLE HSIVolCurve
-ADD CONSTRAINT date_option
-UNIQUE (date, type);``
+> ALTER TABLE HSIVolCurve ADD CONSTRAINT date_option UNIQUE (date, type);
 
+## MySQL `DailySPC` table
+| Column Name      | Description |
+| ----------- | ----------- | 
+| date | pricing date of the options |
+| spc | value of spc (float)|
+
+**Specification**
+- unique key: date
+
+## MongoDB `WeeklySPC` table
+
+| Column Name      | Description |
+| ----------- | ----------- | 
+| date | Friday of the calculation week |
+| ratio | average spc of the given week|
+
+**Specification**
+- unique key: date
