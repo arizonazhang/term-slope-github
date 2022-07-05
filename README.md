@@ -21,10 +21,14 @@ are shown below:
 
    
 **SPC Formula**
-- put-call parity: $P- C = K e^{-r_t T}$ -S_t + PV(Dividend)$
+- put-call parity: $P- C = K e^{-r_t T} -S_t + PV(Dividend)$
 - theorectical put-call ratio: $\frac{P-C}{C}=\frac{P}{C} - 1$ where $P-C$ is approximately $PV(Dividend)$ for ATM options
 - actual put-call ratio: 
-  $\frac{V^{BS}_{Put}\left(S_t/K=1, T, \sigma_t^{ATM put}\right)}{V^{BS}_{call}\left(S_t/K=1, T, \sigma_t^{ATM call}\right)} - 1$ for $T$ ranging from 1/12 to 1 
+  
+  $\frac{V^{BS}_{Put}\left(S_t/K=1, T, \sigma_t^{ATM put}\right)}{V^{BS}_{call}\left(S_t/K=1, T, \sigma_t^{ATM call}\right)} - 1$ 
+  
+  for $T$ ranging from 1/12 to 1 
+  
 - slope $spc$: slope of regressing put-call ratio over $T$
   
 - Back-solving for implied vol using the Newton's method: $\sigma_{n+1} = \sigma_{n} - \frac{BS(\sigma_n)-P}{v(\sigma_n)}$ where 
