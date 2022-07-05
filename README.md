@@ -19,7 +19,7 @@ are shown below:
 
 - Volatility: 16.11% versus 23.41% (long HSI)
 
-
+   
 **SPC Formula**
 - put-call parity: $P- C = K e^{-r_t T}$ -S_t + PV(Dividend)$
 - theorectical put-call ratio: $\frac{P-C}{C}=\frac{P}{C} - 1$ where $P-C$ is approximately $PV(Dividend)$ for ATM options
