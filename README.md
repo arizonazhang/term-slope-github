@@ -1,4 +1,4 @@
-# Theory and Background
+# Background
 **Name:** SPC
 
 **Description:** 
@@ -24,14 +24,20 @@ are shown below:
 - put-call parity: $P- C = K e^{-r_t T}$ -S_t + PV(Dividend)$
 - theorectical put-call ratio: $\frac{P-C}{C}=\frac{P}{C} - 1$ where $P-C$ is approximately $PV(Dividend)$ for ATM options
 - actual put-call ratio: 
-  $\frac{V^{BS}_{PUT}(S_t/K=1, T, \sigma_t^{ATM put})}{V^{BS}_{CALL}(S_t/K=1, T, \sigma_t^{ATM call})} - 1$ for T ranging from 1/12 to 1
+  $\frac{V^{BS}_{PUT}(S_t/K=1, T, \sigma_t^{ATM put})}{V^{BS}_{CALL}(S_t/K=1, T, \sigma_t^{ATM call})} - 1$ for $T$ ranging from 1/12 to 1
 - slope $spc$: slope of regressing put-call ratio over $T$
   
-- Back-solving for implied vol used the Newton's method: $\sigma_{n+1} = \sigma_{n} - \frac{BS(\sigma_n)-P}{v(\sigma_n)}$ where 
+- Back-solving for implied vol using the Newton's method: $\sigma_{n+1} = \sigma_{n} - \frac{BS(\sigma_n)-P}{v(\sigma_n)}$ where 
 $P$ is the option price and $v(\sigma_n)$ is vega. 
 
-> online reference: [Computing implied volatility](https://quant.stackexchange.com/questions/7761/a-simple-formula-for-calculating-implied-volatility) and SPC paper (see the folder)
 
+
+
+# Files
+1. weekly update of SPC: `main.py`, `option.py` (implementation class) and  `utils.py`(functions for the class)
+2. backtest results (in the *backtests* folder): `main.py`, `strat.py` (strategy classes) and `backtest.ipynb` (visualization)
+3. reference (in the *backtests* folder): SPC theories, Refinitiv's implied vol computation methodology, formulas for Black-Scholes Models
+4. reference online: [Computing implied volatility](https://quant.stackexchange.com/questions/7761/a-simple-formula-for-calculating-implied-volatility)
 
 # Calculation
 ## Data Inputs
@@ -55,7 +61,7 @@ $$q = \frac{1}{2}(q_1 + q_2)$$
 - Compute put-call ratio of each maturity
 - Compute spc of each day
 
-# Dataset specifications
+# Datasets
 ## MySQL `HSIVolCurve` table
 
 | Column Name      | Description |
